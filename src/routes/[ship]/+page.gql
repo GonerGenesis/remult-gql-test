@@ -1,0 +1,6 @@
+query GetFramesBaseInfo($ship: ID!) {
+  ship(id: $ship) {
+    id
+    ...FramesInfo
+  }
+}

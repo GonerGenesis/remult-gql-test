@@ -1,5 +1,6 @@
 import { Entity, Fields, Relations } from 'remult'
 import { User } from './User'
+import { Frame } from './Frame'
 
 @Entity('ships', {
   allowApiCrud: true,
@@ -16,7 +17,7 @@ export class Ship {
   title: string = ''
 
   @Fields.number()
-	lpp!: number
+  lpp!: number
 
   @Fields.createdAt()
   createdAt?: Date
@@ -26,4 +27,7 @@ export class Ship {
 
   @Relations.toOne(() => User, { field: 'author_id' })
   author!: User
+
+  @Relations.toMany(() => Frame, { field: 'ship_id', })
+  frames?: Frame[]
 }

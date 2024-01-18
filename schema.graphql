@@ -1,5 +1,37 @@
 """Represents all Remult entities."""
 type Query {
+  """Get `Frame` entity"""
+  frame(id: ID!): Frame
+
+  """List all `Frame` entity (with pagination, sorting and filtering)"""
+  frames(
+    """
+    For **page by page** pagination.
+    Limit the number of result. 
+    _Side note: `Math.ceil(totalCount / limit)` to determine how many pages there are._
+    """
+    limit: Int
+
+    """
+    For **page by page** pagination.
+    Select a dedicated page.
+    """
+    page: Int
+
+    """
+    For **page by page** pagination.
+    Set the offset needed.
+    _Side node: if `page` arg is set, `offset` will be ignored._
+    """
+    offset: Int
+
+    """Remult sorting options"""
+    orderBy: framesOrderBy
+
+    """Remult filtering options"""
+    where: framesWhere
+  ): FrameConnection
+
   """Get `Task` entity"""
   task(id: ID!): Task
 
@@ -105,6 +137,15 @@ type Query {
 
 """The type for `Mutation`"""
 type Mutation {
+  """Create a new `Frame`"""
+  createFrame(input: CreateFrameInput!, clientMutationId: String): CreateFramePayload
+
+  """Update a `Frame`"""
+  updateFrame(id: ID!, patch: UpdateFrameInput!, clientMutationId: String): UpdateFramePayload
+
+  """Delete a `Frame`"""
+  deleteFrame(id: ID!, clientMutationId: String): DeleteFramePayload
+
   """Create a new `Task`"""
   createTask(input: CreateTaskInput!, clientMutationId: String): CreateTaskPayload
 
@@ -131,6 +172,83 @@ type Mutation {
 
   """Delete a `Ship`"""
   deleteShip(id: ID!, clientMutationId: String): DeleteShipPayload
+}
+
+"""The type_impl_node for `Frame`"""
+type Frame implements Node {
+  """Id"""
+  id: String!
+
+  """Frame Pos"""
+  framePos: Float!
+
+  """Created At"""
+  createdAt: String!
+
+  """Ship_id"""
+  ship_id: String!
+
+  """Ship"""
+  ship: Ship!
+
+  """The globally unique `ID` _(_typename:id)_"""
+  nodeId: ID!
+}
+
+"""OrderBy options for `frames`"""
+input framesOrderBy {
+  id: OrderByDirection
+  framePos: OrderByDirection
+  createdAt: OrderByDirection
+  ship_id: OrderByDirection
+}
+
+"""Where options for `frames`"""
+input framesWhere {
+  id: WhereString
+  framePos: WhereFloat
+  createdAt: WhereString
+  ship_id: WhereString
+  OR: [framesWhere!]
+}
+
+"""The type for `FrameConnection`"""
+type FrameConnection {
+  totalCount: Int!
+  items: [Frame!]!
+}
+
+"""The input for `CreateFrameInput`"""
+input CreateFrameInput {
+  framePos: Float
+  ship_id: String
+}
+
+"""The type for `CreateFramePayload`"""
+type CreateFramePayload {
+  frame: Frame
+  error: ErrorDetail
+  clientMutationId: String
+}
+
+"""The input for `UpdateFrameInput`"""
+input UpdateFrameInput {
+  framePos: Float
+  ship_id: String
+}
+
+"""The type for `UpdateFramePayload`"""
+type UpdateFramePayload {
+  frame: Frame
+  error: ErrorDetail
+  clientMutationId: String
+}
+
+"""The type for `DeleteFramePayload`"""
+type DeleteFramePayload {
+  id: ID
+  error: ErrorDetail
+  clientMutationId: String
 }
 
 """The type_impl_node for `Task`"""
@@ -322,6 +440,35 @@ type Ship implements Node {
 
   """Author"""
   author: User!
+
+  """List all `Ship` of `frames`"""
+  frames(
+    """
+    For **page by page** pagination.
+    Limit the number of result. 
+    _Side note: `Math.ceil(totalCount / limit)` to determine how many pages there are._
+    """
+    limit: Int
+
+    """
+    For **page by page** pagination.
+    Select a dedicated page.
+    """
+    page: Int
+
+    """
+    For **page by page** pagination.
+    Set the offset needed.
+    _Side node: if `page` arg is set, `offset` will be ignored._
+    """
+    offset: Int
+
+    """Remult sorting options"""
+    orderBy: framesOrderBy
+
+    """Remult filtering options"""
+    where: framesWhere
+  ): FrameConnection
 
   """The globally unique `ID` _(_typename:id)_"""
   nodeId: ID!
