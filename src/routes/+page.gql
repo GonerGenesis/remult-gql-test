@@ -1,0 +1,12 @@
+query GetShips {
+  user(id: "u3xaxys7wdmnbymnl2cv2tlq") {
+    ships {
+      items @list(name: "All_Ships") {
+        id
+        ...ShipInfo
+      }
+    }
+    id
+    name
+  }
+}

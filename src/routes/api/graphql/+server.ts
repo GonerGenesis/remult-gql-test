@@ -1,11 +1,28 @@
 import type { RequestEvent } from "@sveltejs/kit"
-import { createSchema, createYoga } from "graphql-yoga"
+import { createSchema, createYoga, mergeSchemas } from "graphql-yoga"
+import { printSchema } from 'graphql'
 import { remultGraphql } from "remult/graphql"
+import { writeFile } from 'node:fs/promises'
 import { entities } from "../../../shared"
 
 const { typeDefs, resolvers } = remultGraphql({
-  entities: entities
+  entities: entities,
+  removeComments: false,
 })
+
+const schema = mergeSchemas({
+  schemas: [
+              // remult Schema
+      createSchema({
+          typeDefs,
+          resolvers,
+      }),
+              // things to extend the schema
+      // projectViewSchema,
+  ],
+})
+
+await writeFile('schema.graphql', printSchema(schema))
 
 const yogaApp = createYoga<RequestEvent>({
   schema: createSchema({

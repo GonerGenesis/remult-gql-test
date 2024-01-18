@@ -1,0 +1,547 @@
+"""Represents all Remult entities."""
+type Query {
+  """Get `Task` entity"""
+  task(id: ID!): Task
+
+  """List all `Task` entity (with pagination, sorting and filtering)"""
+  tasks(
+    """
+    For **page by page** pagination.
+    Limit the number of result. 
+    _Side note: `Math.ceil(totalCount / limit)` to determine how many pages there are._
+    """
+    limit: Int
+
+    """
+    For **page by page** pagination.
+    Select a dedicated page.
+    """
+    page: Int
+
+    """
+    For **page by page** pagination.
+    Set the offset needed.
+    _Side node: if `page` arg is set, `offset` will be ignored._
+    """
+    offset: Int
+
+    """Remult sorting options"""
+    orderBy: tasksOrderBy
+
+    """Remult filtering options"""
+    where: tasksWhere
+  ): TaskConnection
+
+  """Get `User` entity"""
+  user(id: ID!): User
+
+  """List all `User` entity (with pagination, sorting and filtering)"""
+  users(
+    """
+    For **page by page** pagination.
+    Limit the number of result. 
+    _Side note: `Math.ceil(totalCount / limit)` to determine how many pages there are._
+    """
+    limit: Int
+
+    """
+    For **page by page** pagination.
+    Select a dedicated page.
+    """
+    page: Int
+
+    """
+    For **page by page** pagination.
+    Set the offset needed.
+    _Side node: if `page` arg is set, `offset` will be ignored._
+    """
+    offset: Int
+
+    """Remult sorting options"""
+    orderBy: usersOrderBy
+
+    """Remult filtering options"""
+    where: usersWhere
+  ): UserConnection
+
+  """Get `Ship` entity"""
+  ship(id: ID!): Ship
+
+  """List all `Ship` entity (with pagination, sorting and filtering)"""
+  ships(
+    """
+    For **page by page** pagination.
+    Limit the number of result. 
+    _Side note: `Math.ceil(totalCount / limit)` to determine how many pages there are._
+    """
+    limit: Int
+
+    """
+    For **page by page** pagination.
+    Select a dedicated page.
+    """
+    page: Int
+
+    """
+    For **page by page** pagination.
+    Set the offset needed.
+    _Side node: if `page` arg is set, `offset` will be ignored._
+    """
+    offset: Int
+
+    """Remult sorting options"""
+    orderBy: shipsOrderBy
+
+    """Remult filtering options"""
+    where: shipsWhere
+  ): ShipConnection
+
+  """Grab any Remult entity given it's globally unique `ID`"""
+  node(
+    """The globally unique `ID` _(_typename:id)_"""
+    nodeId: ID!
+  ): Node
+}
+
+"""The type for `Mutation`"""
+type Mutation {
+  """Create a new `Task`"""
+  createTask(input: CreateTaskInput!, clientMutationId: String): CreateTaskPayload
+
+  """Update a `Task`"""
+  updateTask(id: ID!, patch: UpdateTaskInput!, clientMutationId: String): UpdateTaskPayload
+
+  """Delete a `Task`"""
+  deleteTask(id: ID!, clientMutationId: String): DeleteTaskPayload
+
+  """Create a new `User`"""
+  createUser(input: CreateUserInput!, clientMutationId: String): CreateUserPayload
+
+  """Update a `User`"""
+  updateUser(id: ID!, patch: UpdateUserInput!, clientMutationId: String): UpdateUserPayload
+
+  """Delete a `User`"""
+  deleteUser(id: ID!, clientMutationId: String): DeleteUserPayload
+
+  """Create a new `Ship`"""
+  createShip(input: CreateShipInput!, clientMutationId: String): CreateShipPayload
+
+  """Update a `Ship`"""
+  updateShip(id: ID!, patch: UpdateShipInput!, clientMutationId: String): UpdateShipPayload
+
+  """Delete a `Ship`"""
+  deleteShip(id: ID!, clientMutationId: String): DeleteShipPayload
+}
+
+"""The type_impl_node for `Task`"""
+type Task implements Node {
+  """Id"""
+  id: String!
+
+  """Title"""
+  title: String!
+
+  """Completed"""
+  completed: Boolean!
+
+  """Created At"""
+  createdAt: String!
+
+  """The globally unique `ID` _(_typename:id)_"""
+  nodeId: ID!
+}
+
+"""OrderBy options for `tasks`"""
+input tasksOrderBy {
+  id: OrderByDirection
+  title: OrderByDirection
+  completed: OrderByDirection
+  createdAt: OrderByDirection
+}
+
+"""Where options for `tasks`"""
+input tasksWhere {
+  id: WhereString
+  title: WhereString
+  completed: WhereBoolean
+  createdAt: WhereString
+  OR: [tasksWhere!]
+}
+
+"""The type for `TaskConnection`"""
+type TaskConnection {
+  totalCount: Int!
+  items: [Task!]!
+}
+
+"""The input for `CreateTaskInput`"""
+input CreateTaskInput {
+  title: String
+  completed: Boolean
+}
+
+"""The type for `CreateTaskPayload`"""
+type CreateTaskPayload {
+  task: Task
+  error: ErrorDetail
+  clientMutationId: String
+}
+
+"""The input for `UpdateTaskInput`"""
+input UpdateTaskInput {
+  title: String
+  completed: Boolean
+}
+
+"""The type for `UpdateTaskPayload`"""
+type UpdateTaskPayload {
+  task: Task
+  error: ErrorDetail
+  clientMutationId: String
+}
+
+"""The type for `DeleteTaskPayload`"""
+type DeleteTaskPayload {
+  id: ID
+  error: ErrorDetail
+  clientMutationId: String
+}
+
+"""The type_impl_node for `User`"""
+type User implements Node {
+  """Id"""
+  id: String!
+
+  """Name"""
+  name: String!
+
+  """Created At"""
+  createdAt: String!
+
+  """List all `User` of `ships`"""
+  ships(
+    """
+    For **page by page** pagination.
+    Limit the number of result. 
+    _Side note: `Math.ceil(totalCount / limit)` to determine how many pages there are._
+    """
+    limit: Int
+
+    """
+    For **page by page** pagination.
+    Select a dedicated page.
+    """
+    page: Int
+
+    """
+    For **page by page** pagination.
+    Set the offset needed.
+    _Side node: if `page` arg is set, `offset` will be ignored._
+    """
+    offset: Int
+
+    """Remult sorting options"""
+    orderBy: shipsOrderBy
+
+    """Remult filtering options"""
+    where: shipsWhere
+  ): ShipConnection
+
+  """The globally unique `ID` _(_typename:id)_"""
+  nodeId: ID!
+}
+
+"""OrderBy options for `users`"""
+input usersOrderBy {
+  id: OrderByDirection
+  name: OrderByDirection
+  createdAt: OrderByDirection
+}
+
+"""Where options for `users`"""
+input usersWhere {
+  id: WhereString
+  name: WhereString
+  createdAt: WhereString
+  OR: [usersWhere!]
+}
+
+"""The type for `UserConnection`"""
+type UserConnection {
+  totalCount: Int!
+  items: [User!]!
+}
+
+"""The input for `CreateUserInput`"""
+input CreateUserInput {
+  name: String
+}
+
+"""The type for `CreateUserPayload`"""
+type CreateUserPayload {
+  user: User
+  error: ErrorDetail
+  clientMutationId: String
+}
+
+"""The input for `UpdateUserInput`"""
+input UpdateUserInput {
+  name: String
+}
+
+"""The type for `UpdateUserPayload`"""
+type UpdateUserPayload {
+  user: User
+  error: ErrorDetail
+  clientMutationId: String
+}
+
+"""The type for `DeleteUserPayload`"""
+type DeleteUserPayload {
+  id: ID
+  error: ErrorDetail
+  clientMutationId: String
+}
+
+"""The type_impl_node for `Ship`"""
+type Ship implements Node {
+  """Id"""
+  id: String!
+
+  """Title"""
+  title: String!
+
+  """Lpp"""
+  lpp: Float!
+
+  """Created At"""
+  createdAt: String!
+
+  """Author_id"""
+  author_id: String!
+
+  """Author"""
+  author: User!
+
+  """The globally unique `ID` _(_typename:id)_"""
+  nodeId: ID!
+}
+
+"""OrderBy options for `ships`"""
+input shipsOrderBy {
+  id: OrderByDirection
+  title: OrderByDirection
+  lpp: OrderByDirection
+  createdAt: OrderByDirection
+  author_id: OrderByDirection
+}
+
+"""Where options for `ships`"""
+input shipsWhere {
+  id: WhereString
+  title: WhereString
+  lpp: WhereFloat
+  createdAt: WhereString
+  author_id: WhereString
+  OR: [shipsWhere!]
+}
+
+"""The type for `ShipConnection`"""
+type ShipConnection {
+  totalCount: Int!
+  items: [Ship!]!
+}
+
+"""The input for `CreateShipInput`"""
+input CreateShipInput {
+  title: String
+  lpp: Float
+  author_id: String
+}
+
+"""The type for `CreateShipPayload`"""
+type CreateShipPayload {
+  ship: Ship
+  error: ErrorDetail
+  clientMutationId: String
+}
+
+"""The input for `UpdateShipInput`"""
+input UpdateShipInput {
+  title: String
+  lpp: Float
+  author_id: String
+}
+
+"""The type for `UpdateShipPayload`"""
+type UpdateShipPayload {
+  ship: Ship
+  error: ErrorDetail
+  clientMutationId: String
+}
+
+"""The type for `DeleteShipPayload`"""
+type DeleteShipPayload {
+  id: ID
+  error: ErrorDetail
+  clientMutationId: String
+}
+
+"""The input for `WhereString`"""
+input WhereString {
+  eq: String
+  ne: String
+  in: [String!]
+  nin: [String!]
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  contains: String
+  notContains: String
+}
+
+"""The input for `WhereStringNullable`"""
+input WhereStringNullable {
+  eq: String
+  ne: String
+  in: [String!]
+  nin: [String!]
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  contains: String
+  notContains: String
+  null: Boolean
+}
+
+"""The input for `WhereInt`"""
+input WhereInt {
+  eq: Int
+  ne: Int
+  in: [Int!]
+  nin: [Int!]
+  gt: Int
+  gte: Int
+  lt: Int
+  lte: Int
+}
+
+"""The input for `WhereIntNullable`"""
+input WhereIntNullable {
+  eq: Int
+  ne: Int
+  in: [Int!]
+  nin: [Int!]
+  gt: Int
+  gte: Int
+  lt: Int
+  lte: Int
+  null: Boolean
+}
+
+"""The input for `WhereFloat`"""
+input WhereFloat {
+  eq: Float
+  ne: Float
+  in: [Float!]
+  nin: [Float!]
+  gt: Float
+  gte: Float
+  lt: Float
+  lte: Float
+}
+
+"""The input for `WhereFloatNullable`"""
+input WhereFloatNullable {
+  eq: Float
+  ne: Float
+  in: [Float!]
+  nin: [Float!]
+  gt: Float
+  gte: Float
+  lt: Float
+  lte: Float
+  null: Boolean
+}
+
+"""The input for `WhereBoolean`"""
+input WhereBoolean {
+  eq: Boolean
+  ne: Boolean
+  in: [Boolean!]
+  nin: [Boolean!]
+}
+
+"""The input for `WhereBooleanNullable`"""
+input WhereBooleanNullable {
+  eq: Boolean
+  ne: Boolean
+  in: [Boolean!]
+  nin: [Boolean!]
+  null: Boolean
+}
+
+"""The input for `WhereID`"""
+input WhereID {
+  eq: ID
+  ne: ID
+  in: [ID!]
+  nin: [ID!]
+}
+
+"""The input for `WhereIDNullable`"""
+input WhereIDNullable {
+  eq: ID
+  ne: ID
+  in: [ID!]
+  nin: [ID!]
+  null: Boolean
+}
+
+"""Determines the order of returned elements"""
+enum OrderByDirection {
+  """Sort data in ascending order"""
+  ASC
+
+  """Sort data in descending order"""
+  DESC
+}
+
+"""
+Node interface of remult entities (eg: nodeId: `Task:1` so `__typename:id`)
+"""
+interface Node {
+  """The globally unique `ID` _(_typename:id)_"""
+  nodeId: ID!
+}
+
+union ErrorDetail = ValidationError | ForbiddenError | NotFoundError
+
+"""Error interface of remult entities"""
+interface Error {
+  message: String!
+}
+
+"""Validation Error"""
+type ValidationError implements Error {
+  message: String!
+  modelState: [ValidationErrorModelState!]!
+}
+
+"""Validation Error Model State"""
+type ValidationErrorModelState {
+  field: String!
+  message: String!
+}
+
+"""Forbidden Error"""
+type ForbiddenError implements Error {
+  message: String!
+}
+
+"""Not Found Error"""
+type NotFoundError implements Error {
+  message: String!
+}

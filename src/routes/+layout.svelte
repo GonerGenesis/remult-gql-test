@@ -1,13 +1,14 @@
 <script lang="ts">
   import { route } from '$lib/ROUTES'
+  import '../app.pcss'
 </script>
 
 <svelte:head>
   <title>KitQL Remult</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css" />
 </svelte:head>
 
-<h1>KitQL & Remult</h1>
+
+<h1>KitQL &amp; Remult</h1>
 
 <hr />
 
